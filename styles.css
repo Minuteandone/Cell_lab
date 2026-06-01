@@ -1,0 +1,837 @@
+:root {
+  color-scheme: dark;
+  --bg: #08111f;
+  --panel: rgba(14, 26, 46, 0.82);
+  --panel-strong: rgba(18, 33, 58, 0.96);
+  --text: #eef6ff;
+  --muted: #9db0c9;
+  --line: rgba(150, 190, 255, 0.18);
+  --accent: #66e0ff;
+  --accent-2: #9d7cff;
+  --shadow: 0 28px 70px rgba(0, 0, 0, 0.42);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(102, 224, 255, 0.18), transparent 28rem),
+    radial-gradient(circle at 80% 20%, rgba(157, 124, 255, 0.16), transparent 30rem),
+    linear-gradient(135deg, #060b13 0%, var(--bg) 50%, #111827 100%);
+  color: var(--text);
+}
+
+button, input { font: inherit; }
+
+.app-shell {
+  width: min(1440px, 100%);
+  margin: 0 auto;
+  padding: 32px;
+}
+
+.hero,
+.workspace,
+.viewer-panel,
+.directory-panel,
+.scene-card,
+.controls-card {
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 32px;
+  border-radius: 32px;
+  background: linear-gradient(135deg, rgba(16, 34, 58, 0.92), rgba(18, 26, 46, 0.7));
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+h1, h2, h3, p { margin-top: 0; }
+
+h1 {
+  margin-bottom: 14px;
+  font-size: clamp(2.5rem, 5vw, 5.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.07em;
+}
+
+h2 { margin-bottom: 10px; font-size: clamp(1.4rem, 2vw, 2rem); }
+h3 { margin-bottom: 0; }
+
+.hero-copy,
+#viewer-description,
+.cell-card p,
+.part-control small {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.hero-copy { max-width: 780px; font-size: 1.08rem; }
+
+.hero-stats {
+  display: grid;
+  gap: 12px;
+  min-width: 190px;
+}
+
+.hero-stats span {
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.055);
+  color: var(--muted);
+}
+
+.hero-stats strong {
+  display: block;
+  color: var(--text);
+  font-size: 1.9rem;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: 330px minmax(0, 1fr);
+  gap: 22px;
+  margin-top: 24px;
+  padding: 22px;
+  border-radius: 32px;
+  background: rgba(4, 10, 20, 0.34);
+}
+
+.directory-panel,
+.viewer-panel,
+.scene-card,
+.controls-card {
+  border-radius: 26px;
+  background: var(--panel);
+}
+
+.directory-panel { padding: 22px; }
+
+.cell-list { display: grid; gap: 14px; }
+
+.cell-card {
+  width: 100%;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.045);
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.cell-card:hover,
+.cell-card.active {
+  transform: translateY(-2px);
+  border-color: rgba(102, 224, 255, 0.68);
+  background: rgba(102, 224, 255, 0.11);
+}
+
+.cell-card strong { display: block; margin-bottom: 4px; font-size: 1.05rem; }
+.cell-card p { margin-bottom: 0; font-size: 0.9rem; }
+
+.viewer-panel { padding: 22px; }
+
+.viewer-header,
+.controls-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.model-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.scene-card {
+  position: relative;
+  min-height: 620px;
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(102, 224, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(102, 224, 255, 0.08) 1px, transparent 1px),
+    radial-gradient(circle at 50% 50%, rgba(102, 224, 255, 0.14), rgba(7, 14, 28, 0.86) 62%);
+  background-size: 42px 42px, 42px 42px, cover;
+}
+
+.scene-toolbar {
+  position: absolute;
+  z-index: 5;
+  top: 18px;
+  left: 18px;
+  display: flex;
+  gap: 8px;
+}
+
+.scene-toolbar button,
+.ghost-button {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 180ms ease, background 180ms ease;
+}
+
+.scene-toolbar button {
+  width: 42px;
+  height: 42px;
+  font-size: 1.2rem;
+}
+
+.ghost-button { padding: 10px 16px; }
+.ghost-button.small { padding: 8px 12px; font-size: 0.85rem; }
+
+.scene-toolbar button:hover,
+.ghost-button:hover { transform: translateY(-1px); background: rgba(102, 224, 255, 0.15); }
+
+.scene {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  min-height: 620px;
+  perspective: 1100px;
+}
+
+.cell-model {
+  position: relative;
+  width: min(62vw, 520px);
+  height: min(62vw, 520px);
+  transform-style: preserve-3d;
+  transform: rotateX(var(--tilt, -14deg)) rotateY(var(--spin, 28deg));
+  transition: transform 360ms ease;
+}
+
+.cell-shell,
+.organelle,
+.label-pin { position: absolute; transform-style: preserve-3d; }
+
+.cell-shell {
+  inset: 4%;
+  border: 2px solid var(--shell-border, rgba(102, 224, 255, 0.7));
+  border-radius: var(--shell-radius, 48% 52% 45% 55% / 54% 44% 56% 46%);
+  background: var(--shell-bg, radial-gradient(circle at 32% 24%, rgba(255,255,255,0.22), rgba(65, 207, 255, 0.2) 42%, rgba(21, 94, 147, 0.18)));
+  box-shadow: inset -28px -24px 58px rgba(0,0,0,0.22), inset 18px 18px 48px rgba(255,255,255,0.1), 0 0 40px rgba(102,224,255,0.2);
+  transform: translateZ(0);
+}
+
+.cell-shell::before,
+.cell-shell::after,
+.organelle::after {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transform: translateZ(-18px) scale(0.94);
+}
+
+.organelle {
+  left: var(--x);
+  top: var(--y);
+  width: var(--w);
+  height: var(--h);
+  border-radius: var(--radius, 999px);
+  background: var(--color);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  box-shadow: inset -12px -12px 24px rgba(0,0,0,0.23), inset 10px 10px 18px rgba(255,255,255,0.18), 0 14px 28px rgba(0,0,0,0.22);
+  transform: translateZ(var(--z)) rotate(var(--r, 0deg));
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.organelle.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateZ(var(--z)) rotate(var(--r, 0deg)) scale(0.65);
+}
+
+.label-pin {
+  left: calc(var(--x) + var(--w) / 2);
+  top: calc(var(--y) + var(--h) / 2);
+  transform: translateZ(calc(var(--z) + 36px));
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(2, 8, 18, 0.78);
+  border: 1px solid rgba(255,255,255,0.16);
+  color: var(--text);
+  font-size: 0.72rem;
+  font-weight: 700;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.label-pin.hidden { display: none; }
+
+.controls-card { padding: 20px; }
+.part-controls { display: grid; gap: 12px; margin-top: 18px; }
+
+.part-control {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: start;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.part-control input {
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+  accent-color: var(--accent);
+}
+
+.part-control strong { display: block; margin-bottom: 2px; }
+.part-control small { display: block; font-size: 0.82rem; }
+
+@media (max-width: 1100px) {
+  .workspace,
+  .model-layout { grid-template-columns: 1fr; }
+  .directory-panel { order: 2; }
+  .hero { align-items: flex-start; flex-direction: column; }
+  .hero-stats { width: 100%; grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 700px) {
+  .app-shell { padding: 16px; }
+  .hero,
+  .workspace,
+  .viewer-panel,
+  .directory-panel { border-radius: 22px; padding: 18px; }
+  .viewer-header,
+  .controls-header { flex-direction: column; }
+  .scene-card,
+  .scene { min-height: 420px; }
+  .cell-model { width: 360px; height: 360px; }
+}
+
+/* Realistic cell detail layers */
+.cell-shell > span,
+.organelle .detail {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
+.shell-highlight {
+  inset: 8% 18% auto 14%;
+  height: 28%;
+  border-radius: inherit;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.24), transparent 68%);
+  filter: blur(1px);
+  transform: translateZ(28px) rotate(-8deg);
+}
+
+.shell-texture {
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0.7;
+  transform: translateZ(18px);
+}
+
+.shell-depth {
+  inset: 7%;
+  border-radius: inherit;
+  border: 1px dashed rgba(255, 255, 255, 0.16);
+  transform: translateZ(-28px) scale(0.9);
+}
+
+.shell-animal .shell-texture {
+  background:
+    radial-gradient(circle at 18% 28%, rgba(255, 255, 255, 0.18) 0 1.2%, transparent 1.35%),
+    radial-gradient(circle at 72% 32%, rgba(102, 224, 255, 0.18) 0 1.1%, transparent 1.25%),
+    radial-gradient(circle at 58% 74%, rgba(255, 255, 255, 0.14) 0 1.4%, transparent 1.55%);
+}
+
+.shell-plant .shell-texture {
+  background:
+    linear-gradient(35deg, transparent 47%, rgba(190, 242, 100, 0.18) 48% 52%, transparent 53%),
+    linear-gradient(125deg, transparent 47%, rgba(187, 247, 208, 0.14) 48% 52%, transparent 53%);
+  background-size: 36px 36px, 44px 44px;
+}
+
+.shell-bacteria .shell-texture {
+  background:
+    radial-gradient(circle at 12% 42%, rgba(254, 240, 138, 0.24) 0 1.8%, transparent 2%),
+    radial-gradient(circle at 36% 66%, rgba(251, 191, 36, 0.2) 0 1.5%, transparent 1.7%),
+    radial-gradient(circle at 72% 38%, rgba(255, 255, 255, 0.15) 0 1.4%, transparent 1.6%);
+}
+
+.organelle {
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 28% 20%, rgba(255, 255, 255, 0.36), transparent 24%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.16), transparent 42%),
+    var(--color);
+}
+
+.organelle::before {
+  content: "";
+  position: absolute;
+  inset: 7% 11% auto 11%;
+  height: 33%;
+  border-radius: inherit;
+  background: linear-gradient(rgba(255, 255, 255, 0.24), transparent);
+  transform: translateZ(22px);
+  z-index: 2;
+}
+
+.organelle .detail {
+  z-index: 3;
+}
+
+.organelle-nucleus {
+  background:
+    radial-gradient(circle at 46% 48%, rgba(244, 114, 182, 0.5) 0 16%, transparent 17%),
+    radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.26), transparent 22%),
+    repeating-radial-gradient(circle at 54% 52%, rgba(255, 255, 255, 0.16) 0 2px, transparent 3px 13px),
+    linear-gradient(145deg, #c4b5fd, #7c3aed);
+}
+
+.organelle-nucleus .detail {
+  width: 42%;
+  height: 8%;
+  border-radius: 999px;
+  background: rgba(49, 46, 129, 0.52);
+  box-shadow: 0 0 9px rgba(255, 255, 255, 0.22);
+}
+
+.organelle-nucleus .detail-1 { left: 17%; top: 31%; transform: rotate(22deg); }
+.organelle-nucleus .detail-2 { left: 40%; top: 32%; transform: rotate(-28deg); }
+.organelle-nucleus .detail-3 { left: 20%; top: 58%; transform: rotate(-18deg); }
+.organelle-nucleus .detail-4 { left: 50%; top: 61%; transform: rotate(18deg); }
+.organelle-nucleus .detail-5,
+.organelle-nucleus .detail-6,
+.organelle-nucleus .detail-7 {
+  width: 7%;
+  height: 7%;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.12);
+}
+.organelle-nucleus .detail-5 { left: 15%; top: 16%; }
+.organelle-nucleus .detail-6 { left: 74%; top: 43%; }
+.organelle-nucleus .detail-7 { left: 32%; top: 75%; }
+
+.organelle-nucleolus {
+  background: radial-gradient(circle at 35% 28%, #fbcfe8, #db2777 72%);
+  box-shadow: 0 0 20px rgba(244, 114, 182, 0.42), inset -8px -8px 16px rgba(0, 0, 0, 0.24);
+}
+
+.organelle-mitochondrion {
+  background:
+    radial-gradient(circle at 28% 25%, rgba(255, 255, 255, 0.32), transparent 24%),
+    linear-gradient(145deg, #fed7aa, #f97316 55%, #c2410c);
+}
+
+.organelle-mitochondrion .detail {
+  top: 19%;
+  width: 8%;
+  height: 65%;
+  border-radius: 999px;
+  background: rgba(124, 45, 18, 0.42);
+  box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.22);
+}
+.organelle-mitochondrion .detail-1 { left: 20%; transform: rotate(16deg); }
+.organelle-mitochondrion .detail-2 { left: 34%; transform: rotate(-14deg); }
+.organelle-mitochondrion .detail-3 { left: 49%; transform: rotate(15deg); }
+.organelle-mitochondrion .detail-4 { left: 64%; transform: rotate(-13deg); }
+.organelle-mitochondrion .detail-5 { left: 78%; transform: rotate(12deg); }
+
+.organelle-golgi {
+  overflow: visible;
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+.organelle-golgi::before,
+.organelle-golgi::after { display: none; }
+.organelle-golgi .detail {
+  left: 8%;
+  width: 84%;
+  height: 15%;
+  border-radius: 999px 55% 55% 999px;
+  background: linear-gradient(90deg, #86efac, #10b981);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.28), inset 0 2px 5px rgba(255, 255, 255, 0.26);
+}
+.organelle-golgi .detail-1 { top: 4%; width: 64%; left: 18%; }
+.organelle-golgi .detail-2 { top: 20%; width: 78%; }
+.organelle-golgi .detail-3 { top: 36%; }
+.organelle-golgi .detail-4 { top: 52%; width: 76%; left: 12%; }
+.organelle-golgi .detail-5 { top: 68%; width: 62%; left: 20%; }
+.organelle-golgi .detail-6 { top: 84%; width: 42%; left: 32%; }
+
+.organelle-rough-er,
+.organelle-smooth-er {
+  overflow: visible;
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+.organelle-rough-er::before,
+.organelle-rough-er::after,
+.organelle-smooth-er::before,
+.organelle-smooth-er::after { display: none; }
+.organelle-rough-er .detail,
+.organelle-smooth-er .detail {
+  height: 18%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #bfdbfe, #2563eb);
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.28);
+}
+.organelle-rough-er .detail:nth-child(odd),
+.organelle-smooth-er .detail:nth-child(odd) { width: 78%; left: 6%; }
+.organelle-rough-er .detail:nth-child(even),
+.organelle-smooth-er .detail:nth-child(even) { width: 62%; left: 26%; }
+.organelle-rough-er .detail-1,
+.organelle-smooth-er .detail-1 { top: 0; transform: rotate(-8deg); }
+.organelle-rough-er .detail-2,
+.organelle-smooth-er .detail-2 { top: 15%; transform: rotate(13deg); }
+.organelle-rough-er .detail-3,
+.organelle-smooth-er .detail-3 { top: 31%; transform: rotate(-16deg); }
+.organelle-rough-er .detail-4,
+.organelle-smooth-er .detail-4 { top: 47%; transform: rotate(10deg); }
+.organelle-rough-er .detail-5,
+.organelle-smooth-er .detail-5 { top: 64%; transform: rotate(-12deg); }
+.organelle-rough-er .detail-6,
+.organelle-smooth-er .detail-6 { top: 80%; transform: rotate(8deg); }
+.organelle-rough-er .detail-7,
+.organelle-rough-er .detail-8,
+.organelle-rough-er .detail-9,
+.organelle-rough-er .detail-10 {
+  width: 6%;
+  height: 10%;
+  border-radius: 50%;
+  background: #dbeafe;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.35);
+}
+.organelle-rough-er .detail-7 { left: 12%; top: 11%; }
+.organelle-rough-er .detail-8 { left: 70%; top: 33%; }
+.organelle-rough-er .detail-9 { left: 28%; top: 59%; }
+.organelle-rough-er .detail-10 { left: 80%; top: 73%; }
+
+.organelle-lysosome {
+  background:
+    radial-gradient(circle at 36% 34%, rgba(255, 255, 255, 0.35), transparent 22%),
+    radial-gradient(circle at 60% 58%, rgba(127, 29, 29, 0.35) 0 18%, transparent 19%),
+    linear-gradient(145deg, #fb7185, #be123c);
+}
+
+.organelle-chloroplast {
+  background:
+    radial-gradient(circle at 25% 22%, rgba(255, 255, 255, 0.32), transparent 22%),
+    linear-gradient(145deg, #86efac, #16a34a 58%, #166534);
+}
+.organelle-chloroplast .detail {
+  width: 15%;
+  height: 54%;
+  top: 24%;
+  border-radius: 999px;
+  background: repeating-linear-gradient(0deg, #052e16 0 3px, #bbf7d0 4px 6px);
+  box-shadow: 0 0 5px rgba(187, 247, 208, 0.36);
+}
+.organelle-chloroplast .detail-1 { left: 16%; }
+.organelle-chloroplast .detail-2 { left: 36%; }
+.organelle-chloroplast .detail-3 { left: 56%; }
+.organelle-chloroplast .detail-4 { left: 76%; }
+.organelle-chloroplast .detail-5,
+.organelle-chloroplast .detail-6,
+.organelle-chloroplast .detail-7,
+.organelle-chloroplast .detail-8 {
+  height: 5%;
+  width: 80%;
+  left: 10%;
+  background: rgba(220, 252, 231, 0.42);
+}
+.organelle-chloroplast .detail-5 { top: 18%; }
+.organelle-chloroplast .detail-6 { top: 37%; }
+.organelle-chloroplast .detail-7 { top: 58%; }
+.organelle-chloroplast .detail-8 { top: 76%; }
+
+.organelle-vacuole {
+  background:
+    radial-gradient(circle at 30% 22%, rgba(255,255,255,0.42), transparent 23%),
+    radial-gradient(circle at 58% 62%, rgba(14, 165, 233, 0.2), transparent 26%),
+    rgba(125, 211, 252, 0.44);
+  border-color: rgba(186, 230, 253, 0.75);
+}
+.organelle-vacuole .detail {
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+}
+.organelle-vacuole .detail-1 { width: 16%; height: 16%; left: 19%; top: 25%; }
+.organelle-vacuole .detail-2 { width: 8%; height: 8%; left: 65%; top: 28%; }
+.organelle-vacuole .detail-3 { width: 12%; height: 12%; left: 50%; top: 62%; }
+.organelle-vacuole .detail-4 { width: 7%; height: 7%; left: 35%; top: 72%; }
+.organelle-vacuole .detail-5 { width: 9%; height: 9%; left: 75%; top: 54%; }
+
+.organelle-nucleoid {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+.organelle-nucleoid::before,
+.organelle-nucleoid::after { display: none; }
+.organelle-nucleoid .detail {
+  width: 54%;
+  height: 30%;
+  border: 3px solid #f9a8d4;
+  border-color: #f9a8d4 transparent #f9a8d4 #f9a8d4;
+  border-radius: 50%;
+  filter: drop-shadow(0 0 5px rgba(244, 114, 182, 0.45));
+}
+.organelle-nucleoid .detail-1 { left: 0; top: 25%; transform: rotate(18deg); }
+.organelle-nucleoid .detail-2 { left: 15%; top: 38%; transform: rotate(-18deg); }
+.organelle-nucleoid .detail-3 { left: 31%; top: 20%; transform: rotate(28deg); }
+.organelle-nucleoid .detail-4 { left: 45%; top: 43%; transform: rotate(-28deg); }
+.organelle-nucleoid .detail-5 { left: 18%; top: 8%; transform: rotate(5deg); }
+.organelle-nucleoid .detail-6 { left: 55%; top: 16%; transform: rotate(11deg); }
+.organelle-nucleoid .detail-7 { left: 7%; top: 54%; transform: rotate(-9deg); }
+
+.organelle-ribosome-field {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+.organelle-ribosome-field::before,
+.organelle-ribosome-field::after { display: none; }
+.organelle-ribosome-field .detail {
+  width: 8%;
+  height: 10%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #eff6ff, #60a5fa 62%, #1d4ed8);
+  box-shadow: 0 0 6px rgba(147, 197, 253, 0.45);
+}
+.organelle-ribosome-field .detail-1 { left: 8%; top: 12%; }
+.organelle-ribosome-field .detail-2 { left: 24%; top: 34%; }
+.organelle-ribosome-field .detail-3 { left: 44%; top: 18%; }
+.organelle-ribosome-field .detail-4 { left: 62%; top: 46%; }
+.organelle-ribosome-field .detail-5 { left: 80%; top: 24%; }
+.organelle-ribosome-field .detail-6 { left: 15%; top: 64%; }
+.organelle-ribosome-field .detail-7 { left: 37%; top: 72%; }
+.organelle-ribosome-field .detail-8 { left: 58%; top: 76%; }
+.organelle-ribosome-field .detail-9 { left: 72%; top: 8%; }
+.organelle-ribosome-field .detail-10 { left: 5%; top: 43%; }
+.organelle-ribosome-field .detail-11 { left: 29%; top: 5%; }
+.organelle-ribosome-field .detail-12 { left: 90%; top: 62%; }
+.organelle-ribosome-field .detail-13 { left: 48%; top: 52%; }
+.organelle-ribosome-field .detail-14 { left: 69%; top: 67%; }
+.organelle-ribosome-field .detail-15 { left: 31%; top: 52%; }
+.organelle-ribosome-field .detail-16 { left: 12%; top: 82%; }
+.organelle-ribosome-field .detail-17 { left: 52%; top: 3%; }
+.organelle-ribosome-field .detail-18 { left: 82%; top: 82%; }
+.organelle-ribosome-field .detail-19 { left: 40%; top: 39%; }
+.organelle-ribosome-field .detail-20 { left: 20%; top: 18%; }
+.organelle-ribosome-field .detail-21 { left: 64%; top: 27%; }
+.organelle-ribosome-field .detail-22 { left: 76%; top: 50%; }
+
+.organelle-plasmid {
+  background: transparent;
+  border: 3px solid #d8b4fe;
+  box-shadow: 0 0 12px rgba(216, 180, 254, 0.45);
+}
+.organelle-plasmid::before,
+.organelle-plasmid::after { display: none; }
+
+.organelle-flagellum,
+.organelle-pili {
+  overflow: visible;
+  background: linear-gradient(90deg, #fef3c7, #f59e0b);
+  box-shadow: 0 0 12px rgba(251, 191, 36, 0.28);
+}
+.organelle-flagellum .detail,
+.organelle-pili .detail {
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: rgba(120, 53, 15, 0.28);
+}
+.organelle-flagellum .detail-1,
+.organelle-pili .detail-1 { left: 12%; }
+.organelle-flagellum .detail-2,
+.organelle-pili .detail-2 { left: 24%; }
+.organelle-flagellum .detail-3,
+.organelle-pili .detail-3 { left: 36%; }
+.organelle-flagellum .detail-4,
+.organelle-pili .detail-4 { left: 48%; }
+.organelle-flagellum .detail-5,
+.organelle-pili .detail-5 { left: 60%; }
+.organelle-flagellum .detail-6,
+.organelle-pili .detail-6 { left: 72%; }
+.organelle-flagellum .detail-7 { left: 84%; }
+.organelle-flagellum .detail-8 { left: 94%; }
+
+.organelle-cytoskeleton {
+  overflow: visible;
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+.organelle-cytoskeleton::before,
+.organelle-cytoskeleton::after { display: none; }
+.organelle-cytoskeleton .detail {
+  left: 8%;
+  top: 50%;
+  width: 88%;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(147, 197, 253, 0.55);
+  box-shadow: 0 0 8px rgba(147, 197, 253, 0.35);
+}
+.organelle-cytoskeleton .detail-1 { transform: rotate(0deg); }
+.organelle-cytoskeleton .detail-2 { transform: rotate(24deg); }
+.organelle-cytoskeleton .detail-3 { transform: rotate(-24deg); }
+.organelle-cytoskeleton .detail-4 { transform: rotate(48deg); }
+.organelle-cytoskeleton .detail-5 { transform: rotate(-48deg); }
+.organelle-cytoskeleton .detail-6 { top: 25%; transform: rotate(12deg); }
+.organelle-cytoskeleton .detail-7 { top: 72%; transform: rotate(-12deg); }
+.organelle-cytoskeleton .detail-8 { left: 42%; top: 12%; width: 2px; height: 78%; }
+.organelle-cytoskeleton .detail-9 { left: 58%; top: 15%; width: 2px; height: 70%; }
+
+.organelle-centriole {
+  overflow: visible;
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+.organelle-centriole::before,
+.organelle-centriole::after { display: none; }
+.organelle-centriole .detail {
+  width: 10%;
+  height: 80%;
+  top: 10%;
+  border-radius: 999px;
+  background: linear-gradient(#fef08a, #ca8a04);
+  box-shadow: 0 0 7px rgba(250, 204, 21, 0.35);
+}
+.organelle-centriole .detail-1 { left: 18%; transform: rotate(4deg); }
+.organelle-centriole .detail-2 { left: 30%; transform: rotate(8deg); }
+.organelle-centriole .detail-3 { left: 42%; transform: rotate(12deg); }
+.organelle-centriole .detail-4 { left: 55%; transform: rotate(16deg); }
+.organelle-centriole .detail-5 { left: 67%; transform: rotate(20deg); }
+.organelle-centriole .detail-6 { left: 36%; top: 0; transform: rotate(92deg); }
+.organelle-centriole .detail-7 { left: 48%; top: 6%; transform: rotate(96deg); }
+.organelle-centriole .detail-8 { left: 59%; top: 12%; transform: rotate(100deg); }
+.organelle-centriole .detail-9 { left: 72%; top: 18%; transform: rotate(104deg); }
+
+.organelle-cell-wall,
+.organelle-membrane,
+.organelle-capsule {
+  background:
+    radial-gradient(circle at 24% 20%, rgba(255,255,255,0.15), transparent 24%),
+    var(--color);
+}
+.organelle-cell-wall .detail,
+.organelle-membrane .detail,
+.organelle-capsule .detail {
+  width: 16%;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.32);
+}
+.organelle-cell-wall .detail:nth-child(odd),
+.organelle-membrane .detail:nth-child(odd),
+.organelle-capsule .detail:nth-child(odd) { transform: rotate(28deg); }
+.organelle-cell-wall .detail:nth-child(even),
+.organelle-membrane .detail:nth-child(even),
+.organelle-capsule .detail:nth-child(even) { transform: rotate(-28deg); }
+.organelle-cell-wall .detail-1,
+.organelle-membrane .detail-1,
+.organelle-capsule .detail-1 { left: 10%; top: 12%; }
+.organelle-cell-wall .detail-2,
+.organelle-membrane .detail-2,
+.organelle-capsule .detail-2 { left: 36%; top: 16%; }
+.organelle-cell-wall .detail-3,
+.organelle-membrane .detail-3,
+.organelle-capsule .detail-3 { left: 68%; top: 20%; }
+.organelle-cell-wall .detail-4,
+.organelle-membrane .detail-4,
+.organelle-capsule .detail-4 { left: 16%; top: 42%; }
+.organelle-cell-wall .detail-5,
+.organelle-membrane .detail-5,
+.organelle-capsule .detail-5 { left: 48%; top: 45%; }
+.organelle-cell-wall .detail-6,
+.organelle-membrane .detail-6,
+.organelle-capsule .detail-6 { left: 75%; top: 52%; }
+.organelle-cell-wall .detail-7,
+.organelle-membrane .detail-7,
+.organelle-capsule .detail-7 { left: 9%; top: 72%; }
+.organelle-cell-wall .detail-8,
+.organelle-membrane .detail-8,
+.organelle-capsule .detail-8 { left: 39%; top: 77%; }
+.organelle-cell-wall .detail-9,
+.organelle-membrane .detail-9,
+.organelle-capsule .detail-9 { left: 66%; top: 80%; }
+.organelle-cell-wall .detail-10,
+.organelle-membrane .detail-10,
+.organelle-capsule .detail-10 { left: 84%; top: 35%; }
+.organelle-membrane .detail-11 { left: 24%; top: 88%; }
+.organelle-membrane .detail-12 { left: 58%; top: 9%; }
+.organelle-capsule .detail-11 { left: 22%; top: 30%; }
+.organelle-capsule .detail-12 { left: 58%; top: 32%; }
+.organelle-capsule .detail-13 { left: 28%; top: 60%; }
+.organelle-capsule .detail-14 { left: 54%; top: 64%; }
+.organelle-capsule .detail-15 { left: 78%; top: 66%; }
+.organelle-capsule .detail-16 { left: 3%; top: 55%; }
+
+.organelle-plasmodesmata {
+  overflow: visible;
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+.organelle-plasmodesmata::before,
+.organelle-plasmodesmata::after { display: none; }
+.organelle-plasmodesmata .detail {
+  width: 72%;
+  height: 7%;
+  left: 14%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #dcfce7, #22c55e);
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.4);
+}
+.organelle-plasmodesmata .detail-1 { top: 8%; }
+.organelle-plasmodesmata .detail-2 { top: 24%; }
+.organelle-plasmodesmata .detail-3 { top: 40%; }
+.organelle-plasmodesmata .detail-4 { top: 56%; }
+.organelle-plasmodesmata .detail-5 { top: 72%; }
+.organelle-plasmodesmata .detail-6 { top: 88%; }
+.organelle-rough-er .detail.detail-7,
+.organelle-rough-er .detail.detail-8,
+.organelle-rough-er .detail.detail-9,
+.organelle-rough-er .detail.detail-10 {
+  width: 6%;
+  height: 10%;
+  border-radius: 50%;
+  background: #dbeafe;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.35);
+}
+.organelle-rough-er .detail.detail-7 { left: 12%; top: 11%; }
+.organelle-rough-er .detail.detail-8 { left: 70%; top: 33%; }
+.organelle-rough-er .detail.detail-9 { left: 28%; top: 59%; }
+.organelle-rough-er .detail.detail-10 { left: 80%; top: 73%; }
