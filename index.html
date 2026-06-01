@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cell Lab Directory</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">Interactive biology atlas</p>
+          <h1 id="page-title">3D Cell Directory</h1>
+          <p class="hero-copy">
+            Browse different cells, rotate the model, and toggle individual structures to explore how each cell is organized.
+          </p>
+        </div>
+        <div class="hero-stats" aria-label="Directory summary">
+          <span><strong id="cell-count">0</strong> cell models</span>
+          <span><strong id="part-count">0</strong> togglable parts</span>
+        </div>
+      </section>
+
+      <section class="workspace" aria-label="Cell model workspace">
+        <aside class="directory-panel">
+          <div class="panel-heading">
+            <p class="eyebrow">Directory</p>
+            <h2>Choose a cell</h2>
+          </div>
+          <div id="cell-list" class="cell-list" role="list"></div>
+        </aside>
+
+        <section class="viewer-panel" aria-labelledby="viewer-title">
+          <div class="viewer-header">
+            <div>
+              <p id="viewer-category" class="eyebrow"></p>
+              <h2 id="viewer-title"></h2>
+              <p id="viewer-description"></p>
+            </div>
+            <button id="reset-view" class="ghost-button" type="button">Reset view</button>
+          </div>
+
+          <div class="model-layout">
+            <div class="scene-card">
+              <div class="scene-toolbar" aria-label="Model controls">
+                <button id="rotate-left" type="button" aria-label="Rotate model left">↶</button>
+                <button id="rotate-right" type="button" aria-label="Rotate model right">↷</button>
+                <button id="tilt-up" type="button" aria-label="Tilt model up">↑</button>
+                <button id="tilt-down" type="button" aria-label="Tilt model down">↓</button>
+              </div>
+              <div class="scene" aria-live="polite">
+                <div id="cell-model" class="cell-model" aria-label="3D cell model"></div>
+              </div>
+            </div>
+
+            <aside class="controls-card" aria-labelledby="parts-heading">
+              <div class="controls-header">
+                <div>
+                  <p class="eyebrow">Visibility</p>
+                  <h3 id="parts-heading">Cell parts</h3>
+                </div>
+                <button id="show-all" class="ghost-button small" type="button">Show all</button>
+              </div>
+              <div id="part-controls" class="part-controls"></div>
+            </aside>
+          </div>
+        </section>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
